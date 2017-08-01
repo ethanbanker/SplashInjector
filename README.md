@@ -1,7 +1,7 @@
 # SplashInjector
 
 <p align="center">
-<img src="https://github.com/ethanbanker2428/SplashInjector/blob/1.5/info/logo.png" width="320px" height="320px" > 
+<img src="https://github.com/ethanbanker2428/SplashInjector/blob/1.5/src/info/logo.png" width="320px" height="320px" > 
 </p>
 
 # ALL CREDIT TO @MAKERS_MARK ON XDA. i just ported it to linux and the oneplus5
@@ -14,15 +14,15 @@ its actually quite simple... just follow this
 	
 	https://github.com/ethanbanker2428/SplashInjector
 	cd SplashInjector
-	./start
+	./inject
 
-then choose your OS...		
-then chose your device...
-it will take the logo.bin and decode it
-after edit the files you want too (located in /output)
-then press y and it will encode it and package the file into a flashable zip
-flash it...zips are located in output/splashscreen/splashscreen.zip
-a backup to get back to stock is located in /output/recovery/recovery.zip
+then follow the on screen steps
 
 ## Credits ##
-[@Makers_Mark](https://forum.xda-developers.com/member.php?u=5448769)
+* [@Makers_Mark](https://forum.xda-developers.com/member.php?u=5448769) Wrote the injector
+* [gtpitch](https://github.com/gtpitch) OnePlus 5 logo.bin
+* [Meninblack007](https://github.com/Meninblack007) OnePlus 2 logo.bin
+* [Pete Best](https://drive.google.com/drive/folders/0B260dxr9nvchMGRMa3N5b2FVdEk) OnePlus 3 logo.bin
+* [CM](https://lineageos.org/) OnePlus 1 logo.bin
+
+# HELP WANTED I NEED A LOGO.BIN #
