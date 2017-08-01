@@ -11,12 +11,13 @@ its actually quite simple... just follow this
 	https://github.com/ethanbanker2428/SplashInjector
 	cd SplashInjector
 	./start
-	then chose your device...
-	it will take the logo.bin and decode it
-	after edit the files you want too (located in /output)
-	then press y and it will encode it and package the file into a flashable zip
-	flash it...zips are located in output/splashscreen/splashscreen.zip
-	a backup to get back to stock is located in /output/recovery/recovery.zip
+	
+then chose your device...
+it will take the logo.bin and decode it
+after edit the files you want too (located in /output)
+then press y and it will encode it and package the file into a flashable zip
+flash it...zips are located in output/splashscreen/splashscreen.zip
+a backup to get back to stock is located in /output/recovery/recovery.zip
 
 ## Credits ##
 [@Makers_Mark](https://forum.xda-developers.com/member.php?u=5448769)
