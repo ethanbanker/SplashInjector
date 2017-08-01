@@ -1,5 +1,5 @@
 <p align="center">
-<img src="https://github.com/ethanbanker2428/SplashInjector/info/raw/1.5/logo.png" width="320px" height="320px" > 
+<img src="https://github.com/ethanbanker2428/SplashInjector/tree/1.5/info/logo.png" width="320px" height="320px" > 
 </p>
 
 # SplashInjector
