@@ -1,9 +1,9 @@
+# SplashInjector
+# ALL CREDIT TO @MAKERS_MARK ON XDA. i just ported it to linux and the oneplus5
+
 <p align="center">
 <img src="https://github.com/ethanbanker2428/SplashInjector/blob/1.5/info/logo.png" width="320px" height="320px" > 
 </p>
-
-# SplashInjector
-# ALL CREDIT TO @MAKERS_MARK ON XDA. i just ported it to linux and the oneplus5
 
 # Before you start #
 Read all of [this](https://forum.xda-developers.com/oneplus-3/themes/mod-splash-screen-image-injector-t3441999) to get the basic idea.
