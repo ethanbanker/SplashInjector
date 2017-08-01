@@ -14,38 +14,28 @@ RED='\033[0;31m'
 LG='\033[1;32m'
 NC='\033[0m' # No Color
 echo -e "${RED}"
-echo -e "			 		   "
+echo -e "                      "
 echo -e " ONEPLUS SPLASH INJECTOR "
 echo -e " By ${LG}ethanbanker2428${NC}"
-echo -e "					   "
+echo -e "                      "
 echo -e "${NC}"
 sleep 1
 
 PS3='Choose your Device: '
-options=("OnePlus 1" "OnePlus 2" "OnePlus X" "OnePlus 3/3T" "OnePlus 5" "Exit")
+options=("Linux/OSX" "Windows" "Exit")
 select opt in "${options[@]}"
 do
     case $opt in
-        "OnePlus 1")
-            ./devices/op1
+        "Linux/OSX")
+            ./OS/linux
             ;;
-        "OnePlus 2")
-            ./devices/op2
-            ;;
-        "OnePlus X")
-            ./devices/opx
-            ;;
-        "OnePlus 3/3T")
-            ./devices/op3
-            ;;
-        "OnePlus 5")
-            ./devices/op5
+        "Windows")
+            ./OS/windows
             ;;
         "Exit")
+            clear
             break
             ;;
         *) echo invalid option;;
     esac
 done
-
-ls

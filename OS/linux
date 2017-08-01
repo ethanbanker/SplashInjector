@@ -13,39 +13,61 @@ clear
 RED='\033[0;31m'
 LG='\033[1;32m'
 NC='\033[0m' # No Color
+
 echo -e "${RED}"
-echo -e "			 		   "
-echo -e " ONEPLUS SPLASH INJECTOR "
-echo -e " By ${LG}ethanbanker2428${NC}"
-echo -e "					   "
+echo -e "WARNING THIS WILL ERASE THE OUTPUT FOLDER AND ALL PAST SPLASH SCREENS YOU HAVE MADE...PROCEED WITH CAUTION"
 echo -e "${NC}"
-sleep 1
 
 PS3='Choose your Device: '
-options=("OnePlus 1" "OnePlus 2" "OnePlus X" "OnePlus 3/3T" "OnePlus 5" "Exit")
+options=("OnePlus 1" "OnePlus 2" "OnePlus X" "OnePlus 3/3T" "OnePlus 5")
 select opt in "${options[@]}"
 do
     case $opt in
         "OnePlus 1")
-            ./devices/op1
+			rm -rf output
+			mkdir output
+            ./devices/OP1/op1
+            echo "OnePlus 1 files loaded"
+            sleep 1
+            clear
+            ./tools/linux
             ;;
         "OnePlus 2")
-            ./devices/op2
+			rm -rf output
+			mkdir output
+            ./devices/OP2/op2
+            echo "OnePlus 2 files loaded"
+            sleep 1
+            clear
+            ./tools/linux
             ;;
         "OnePlus X")
-            ./devices/opx
+			rm -rf output
+			mkdir output
+            ./devices/OPX/opx
+            echo "OnePlus X files loaded"
+            sleep 1
+            clear
+            ./tools/linux
             ;;
         "OnePlus 3/3T")
-            ./devices/op3
+			rm -rf output
+			mkdir output
+            ./devices/OP3/op3
+            echo "OnePlus 3/3T files loaded"
+            sleep 1
+            clear
+            ./tools/linux
             ;;
         "OnePlus 5")
-            ./devices/op5
+			rm -rf output
+			mkdir output
+            ./devices/OP5/op5
+            echo "OnePlus 5 files loaded"
+            sleep 1
+            clear
+            ./tools/linux
             ;;
-        "Exit")
-            break
-            ;;
-        *) echo invalid option;;
+        *) exit
     esac
 done
-
-ls
