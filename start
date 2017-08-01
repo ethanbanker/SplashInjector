@@ -15,14 +15,15 @@ LG='\033[1;32m'
 NC='\033[0m' # No Color
 echo -e "${RED}"
 echo -e "                      "
-echo -e " ONEPLUS SPLASH INJECTOR "
+echo -e " SPLASH INJECTOR "
 echo -e " By ${LG}ethanbanker2428${NC}"
+echo -e " Credit too ${LG}@Makers_Mark${NC}"
 echo -e "                      "
 echo -e "${NC}"
 sleep 1
 
 PS3='Choose your Device: '
-options=("Linux/OSX" "Windows" "Exit")
+options=("Linux/OSX" "Windows" "Clean" "Exit")
 select opt in "${options[@]}"
 do
     case $opt in
@@ -31,6 +32,9 @@ do
             ;;
         "Windows")
             ./OS/windows
+            ;;
+        "Clean")
+            rm -rf output
             ;;
         "Exit")
             clear
