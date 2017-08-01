@@ -25,4 +25,4 @@ then follow the on screen steps
 * [Pete Best](https://drive.google.com/drive/folders/0B260dxr9nvchMGRMa3N5b2FVdEk) OnePlus 3 logo.bin
 * [CM](https://lineageos.org/) OnePlus 1 logo.bin
 
-# HELP WANTED I NEED A LOGO.BIN #
+# HELP WANTED I NEED A LOGO.BIN FROM THE OPX #
