@@ -24,17 +24,17 @@ select opt in "${options[@]}"
 do
     case $opt in
         "OnePlus 1")
-			rm -rf output
-			mkdir output
+            rm -rf output
+            mkdir output
             ./devices/OP1/op1
             echo "OnePlus 1 files loaded"
             sleep 1
             clear
-            ./tools/windows-op1
+            ./tools/OP1/windows-op1
             ;;
         "OnePlus 2")
-			rm -rf output
-			mkdir output
+            rm -rf output
+            mkdir output
             ./devices/OP2/op2
             echo "OnePlus 2 files loaded"
             sleep 1
@@ -42,8 +42,8 @@ do
             ./tools/windows
             ;;
         "OnePlus X")
-			rm -rf output
-			mkdir output
+            rm -rf output
+            mkdir output
             ./devices/OPX/opx
             echo "OnePlus X files loaded"
             sleep 1
@@ -51,8 +51,8 @@ do
             ./tools/windows
             ;;
         "OnePlus 3/3T")
-			rm -rf output
-			mkdir output
+            rm -rf output
+            mkdir output
             ./devices/OP3/op3
             echo "OnePlus 3/3T files loaded"
             sleep 1
@@ -60,8 +60,8 @@ do
             ./tools/windows
             ;;
         "OnePlus 5")
-			rm -rf output
-			mkdir output
+            rm -rf output
+            mkdir output
             ./devices/OP5/op5
             echo "OnePlus 5 files loaded"
             sleep 1

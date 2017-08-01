@@ -30,7 +30,7 @@ do
             echo "OnePlus 1 files loaded"
             sleep 1
             clear
-            ./tools/linux-op1
+            ./tools/OP1/linux-op1
             ;;
         "OnePlus 2")
 			rm -rf output

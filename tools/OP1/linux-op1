@@ -50,10 +50,10 @@ echo -e "OK NOW WELL PACK IT INTO A FLASHABLE ZIP"
 echo -e "${NC}"
 sleep 1
 
-cp -r packaging/splashscreen-op1/ output
+cp -r packaging/OP1/splashscreen/ output
 cd output
-mv modified.logo.bin splashscreen-op1/logo.bin
-cd splashscreen-op1
+mv modified.logo.bin splashscreen/logo.bin
+cd splashscreen
 zip -r splashscreen *
 cd ../../
 
@@ -63,10 +63,10 @@ echo -e "${RED}"
 echo -e "PACKING A RESTORE ZIP"
 echo -e "${NC}"
 
-cp -r packaging/restore-op1/ output
+cp -r packaging/OP1/restore/ output
 cd output
-mv logo.bin restore-op1/logo.bin
-cd restore-op1
+mv logo.bin restore/logo.bin
+cd restore
 zip -r restore *
 cd ../../
 

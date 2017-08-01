@@ -1,3 +1,7 @@
+<p align="center">
+<img src="https://github.com/ethanbanker2428/SplashInjector/info/raw/1.5/logo.png" width="320px" height="320px" > 
+</p>
+
 # SplashInjector
 # ALL CREDIT TO @MAKERS_MARK ON XDA. i just ported it to linux and the oneplus5
 
@@ -11,7 +15,8 @@ its actually quite simple... just follow this
 	https://github.com/ethanbanker2428/SplashInjector
 	cd SplashInjector
 	./start
-	
+
+then choose your OS...		
 then chose your device...
 it will take the logo.bin and decode it
 after edit the files you want too (located in /output)

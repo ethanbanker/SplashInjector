@@ -1,0 +1,77 @@
+# Black        0;30     Dark Gray     1;30
+# Red          0;31     Light Red     1;31
+# Green        0;32     Light Green   1;32
+# Brown/Orange 0;33     Yellow        1;33
+# Blue         0;34     Light Blue    1;34
+# Purple       0;35     Light Purple  1;35
+# Cyan         0;36     Light Cyan    1;36
+# Light Gray   0;37     White         1;37
+
+#    .---------- constant part!
+#    vvvv vvvv-- the code from above
+clear
+RED='\033[0;31m'
+LG='\033[1;32m'
+NC='\033[0m' # No Color
+
+echo -e "${RED}"
+echo -e "NOW WELL UNPACK THE LOGO.bin"
+echo -e "${NC}"
+
+cp tools/injector output
+cd output
+./injector -i logo.bin -d
+cd ../
+rm -rf output/injector
+
+echo -e "${RED}"
+echo -e "NOW the files are ready to edit...they are in the output folder. leave this open until your done then i can pack it for you"
+echo -e "${NC}"
+
+sleep 1
+
+read -p "Are you done editing? (y/n)? " answer
+case ${answer:0:1} in
+    y|Y )
+        echo "okay now i will repack your logo.bin"
+		cp tools/injector output
+        cd output
+        ./injector -i logo.bin -j 1-logo.png 2-at.png 3-charger.png 4-fastboot.png 5-lowpower.png 6-rf.png 7-wlan.png
+        cd ../
+        rm -rf output/injector
+    ;;
+    * )
+        echo "okay ill wait"
+    ;;
+esac
+
+echo -e "${RED}"
+echo -e "OK NOW WELL PACK IT INTO A FLASHABLE ZIP"
+echo -e "${NC}"
+sleep 1
+
+cp -r packaging/OP1/splashscreen/ output
+cd output
+mv modified.logo.bin splashscreen/logo.bin
+cd splashscreen
+zip -r splashscreen *
+cd ../../
+
+sleep 1
+
+echo -e "${RED}"
+echo -e "PACKING A RESTORE ZIP"
+echo -e "${NC}"
+
+cp -r packaging/OP1/restore/ output
+cd output
+mv logo.bin restore/logo.bin
+cd restore
+zip -r restore *
+cd ../../
+
+echo -e "${RED}"
+echo -e "ALL DONE CHECK OUTPUT/SPLASHSCREEN FOR THE ZIP FILE"
+echo -e "${NC}"
+
+./start
