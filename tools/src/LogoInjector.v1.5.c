@@ -1,9 +1,14 @@
 /* 
- * Logo Injector v1.4 aka OP3Inject
+ * Logo Injector v1.5
  *
- * Copyright (C) 2016 Joseph Andrew Fornecker
+ * Copyright (C) 2017 Joseph Andrew Fornecker
  * makers_mark @ xda-developers.com
  * fornecker.joseph@gmail.com
+ *
+ * This program is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by the
+ * Free Software Foundation; either version 3 of the License, or (at your
+ * opinion) any later version. See <http://www.gnu.org/licenses/gpl.html>
  *
  * New in v1.2:
  * 
@@ -15,11 +20,11 @@
  * - Show the change in file size of original logo.bin compare to the modified logo.bin
  * - Several small changes dealing with readability
  *
- * New in v1.4:
- *
- * - Added the OnePlus 3's 4096 blocksize
- * - General cleanup
- * - Remains backwards compatible
+ * v1.5:
+ * - Changed maxoffsets for OP5 to 32 from 28
+ * - Adjusted the size of the metadata to make room for the 16 extra bytes taken up by the offsets
+ * - Added 'extra' value to IMAGEHEAD struct
+ * - Changed blockSize to 4096
  */
 
 #include <stdio.h>
@@ -30,9 +35,10 @@
 #include "lodepng.h"
 
 #define SWAP32(x) (( x >> 24 )&0xff) | ((x << 8)&0xff0000) | ((x >> 8)&0xff00) | ((x << 24)&0xff000000)
+#define BLOCK 4096
 #define OFFSETSTART 48
 #define BYTESPERPIXEL 3
-#define MAXOFFSETS 28
+#define MAXOFFSETS 32
 #define SIZEOFLONGINT 4
 #define TWOTOTHETEN 1024
 
@@ -46,7 +52,8 @@ typedef struct {
 	uint32_t special;
 	uint32_t offsets[MAXOFFSETS];
 	uint8_t name[64];
-	uint8_t metaData[288];
+	uint8_t metaData[272];
+	uint8_t extra[BLOCK - 512];
 
 } IMAGEHEAD;
 
@@ -60,7 +67,7 @@ uint32_t GetHeight(FILE*);
 uint64_t BlockIt(uint32_t);
 uint16_t GetNumberOfOffsets(FILE*);
 int32_t DecodeLogoBin(FILE*, IMAGEHEAD *);
-int32_t ListFileDetails(FILE*);
+int32_t ListFileDetails(FILE*, IMAGEHEAD *);
 uint8_t* Decode(FILE*, uint32_t, uint32_t, uint32_t, uint8_t*);
 int32_t IsItTheNewStyle(FILE*);
 IMAGEHEAD* ParseHeaders(FILE*, uint16_t);
@@ -68,11 +75,11 @@ int32_t IsItALogo(FILE*);
 void PrintFileSize(uint32_t);
 uint32_t GetFileSize(FILE *);
 
-uint16_t iBlock = 512;
 uint16_t badAss = 0;
 int16_t rgb2bgr = 1;
 uint16_t convertToPNG = 1;
-const uint8_t HEADER[] = {0x53,0x50,0x4C,0x41,0x53,0x48,0x21,0x21};
+uint8_t HEADER[] = {0x53,0x50,0x4C,0x41,0x53,0x48,0x21,0x21};
+	
 
 int32_t IsItALogo(FILE *originalLogoBin){
 
@@ -101,17 +108,8 @@ int32_t IsItALogo(FILE *originalLogoBin){
 int32_t IsItTheNewStyle(FILE *originalLogoBin){
 
 	int32_t newStyle = 0;
-	int8_t j = 0;
 
 	fread(&newStyle, 1, SIZEOFLONGINT, originalLogoBin);
-	fseek(originalLogoBin, iBlock + 1, SEEK_SET);
-	fread(&j, 1, 1, originalLogoBin);
-
-	if (j == 0){
-
-		iBlock = 4096;
-
-	}
 
 	if (newStyle == 0){
 
@@ -122,22 +120,23 @@ int32_t IsItTheNewStyle(FILE *originalLogoBin){
 		return 0;
 
 	}
-}
+}	
 
 IMAGEHEAD *ParseHeaders(FILE *originalLogoBin, uint16_t numberOfOffsets){
 
 	uint8_t i = 0;
 	IMAGEHEAD *imageHeaders;
 
-	imageHeaders = malloc(iBlock * numberOfOffsets);
-	memset(imageHeaders, 0, iBlock * numberOfOffsets);
+	imageHeaders = malloc(BLOCK * numberOfOffsets);
+
+	memset(imageHeaders, 0, BLOCK * numberOfOffsets);
 	fseek(originalLogoBin, 0, SEEK_SET);
-	fread(&imageHeaders[i], 1 , iBlock, originalLogoBin);
+	fread(&imageHeaders[i], 1 , BLOCK, originalLogoBin);
 
 	for ( i = 1 ; i < numberOfOffsets ; ++i ){
 
 		fseek(originalLogoBin, imageHeaders[0].offsets[i], SEEK_SET);
-		fread(&imageHeaders[i], 1 , iBlock, originalLogoBin);
+		fread(&imageHeaders[i], 1 , BLOCK, originalLogoBin);
 
 	}
 
@@ -202,7 +201,7 @@ uint8_t* Decode(FILE *originalLogoBin, uint32_t start, uint32_t length, uint32_t
 
     }
 
-	fprintf(stdout, "%ld decoded bytes\n\n", (long int)decodedBytes);
+	fprintf(stdout, "%ld decoded bytes\n", decodedBytes);
 	free(data);
 
 	if( rgb2bgr == 1 ){
@@ -226,14 +225,15 @@ uint8_t* Decode(FILE *originalLogoBin, uint32_t start, uint32_t length, uint32_t
 
 int32_t DecodeLogoBin(FILE *originalLogoBin, IMAGEHEAD *imageHeaders){
 
-	uint32_t imageBytes, start;
+	uint32_t size, imageBytes, start;
 	uint8_t* image;
 	uint8_t name[65];
+	uint8_t r = 0;
 	uint16_t i , numberOfOffsets = GetNumberOfOffsets(originalLogoBin);
 
 	for ( i = 0 ; i < numberOfOffsets ; i++ ){
 
-		fprintf(stdout,"#%02d: Offset:%ld ", i + 1, (long int)imageHeaders[0].offsets[i]);
+		fprintf(stdout,"\n\n\n#%d: Offset:%ld\n", i + 1, imageHeaders[0].offsets[i]);
 
 		if ((imageHeaders[i].width == 0) || (imageHeaders[i].height == 0)){
 
@@ -242,33 +242,34 @@ int32_t DecodeLogoBin(FILE *originalLogoBin, IMAGEHEAD *imageHeaders){
 
 		}
 
-		fprintf(stdout, "\nHeader=%s\nWidth=%ld\nHeight=%ld\nData Length=%ld\nSpecial=%ld\nName=%s\nMetadata=%s\n",
-			imageHeaders[i].header, (long int)imageHeaders[i].width, (long int)imageHeaders[i].height,
-			(long int)imageHeaders[i].lengthOfData, (long int)imageHeaders[i].special, imageHeaders[i].name, imageHeaders[i].metaData);
+		fprintf(stdout, "Header=%s\nWidth=%ld\nHeight=%ld\nData Length=%ld\nSpecial=%ld\nName=%s\nMetadata=%s\n",
+			imageHeaders[i].header, imageHeaders[i].width, imageHeaders[i].height,
+			imageHeaders[i].lengthOfData, imageHeaders[i].special, imageHeaders[i].name, imageHeaders[i].metaData);
 
 		if (convertToPNG){
 
-			start = imageHeaders[0].offsets[i] + iBlock;
+			start = imageHeaders[0].offsets[i] + BLOCK;
 			imageBytes = imageHeaders[i].width * (imageHeaders[i].height) * BYTESPERPIXEL;
 			image = malloc(imageBytes);
-			const char* ext;
+			uint8_t lengthOfName = strlen(imageHeaders[i].name);
+			uint8_t *ext;
 
-			ext = strrchr((const char*)imageHeaders[i].name, '.');
+			ext = strrchr(imageHeaders[i].name, '.');
 
 			if (((ext[1] == 'p') || (ext[1] == 'P')) && 
 				((ext[2] == 'n') || (ext[2] == 'N')) &&
 				((ext[3] == 'g') || (ext[3] == 'G')) &&
 				((ext[0] == '.'))){
 
-				sprintf((char*)name, "%s", imageHeaders[i].name);
+				sprintf(name, "%s", imageHeaders[i].name);
 
 			} else {
 
-				sprintf((char*)name, "%s.png", imageHeaders[i].name);
+				sprintf(name, "%s.png", imageHeaders[i].name);
 
 			}
 
-			lodepng_encode24_file((const char*)name, Decode(originalLogoBin, (uint32_t)start, (uint32_t)imageHeaders[i].lengthOfData, (uint32_t)imageBytes, image) , (unsigned)imageHeaders[i].width, (unsigned)imageHeaders[i].height);
+			lodepng_encode24_file(name, Decode(originalLogoBin, (uint32_t)start, (uint32_t)imageHeaders[i].lengthOfData, (uint32_t)imageBytes, image) , (unsigned)imageHeaders[i].width, (unsigned)imageHeaders[i].height);
 			free(image);
 
 		}
@@ -278,14 +279,13 @@ int32_t DecodeLogoBin(FILE *originalLogoBin, IMAGEHEAD *imageHeaders){
 	return 0;
 }
 
-int32_t ListFileDetails(FILE *originalLogoBin){
+int32_t ListFileDetails(FILE *originalLogoBin, IMAGEHEAD *imageHeaders){
 
-	uint32_t i = 0;
+	uint32_t i = 0, j = 0;
 	fseek(originalLogoBin, 0, SEEK_SET);
 	uint16_t numberOfOffsets = GetNumberOfOffsets(originalLogoBin);
-	IMAGEHEAD *imageHeaders = ParseHeaders(originalLogoBin, numberOfOffsets);
 
-	fprintf(stdout, "Resolution\tOffset\t\tName\n");
+	fprintf(stdout, "Resolution\tOffset\tName\n");
 	fprintf(stdout, "-------------------------------------------------------------\n");
 
 	for ( i = 0 ; i < numberOfOffsets ; i++ ){
@@ -299,9 +299,7 @@ int32_t ListFileDetails(FILE *originalLogoBin){
 
 		fprintf(stdout,"%dx%d\t", imageHeaders[i].width, imageHeaders[i].height);
 		if ((imageHeaders[i].width < 1000) && (imageHeaders[i].height <1000)){fprintf(stdout, "\t");}
-		fprintf(stdout, "%ld\t", (long int)imageHeaders[0].offsets[i]);
-		if (imageHeaders[0].offsets[i] < 10000000){fprintf(stdout, "\t");}
-		fprintf(stdout, "%s\n", imageHeaders[i].name );
+		fprintf(stdout, "%ld\t%s\n", imageHeaders[0].offsets[i], imageHeaders[i].name );
 
 	}
 
@@ -311,7 +309,8 @@ int32_t ListFileDetails(FILE *originalLogoBin){
  uint16_t Copy(FILE *originalLogoBin, IMAGEHEAD *imageHeaders, uint16_t numberOfOffsets, uint16_t injectionNumber, FILE *modifiedLogoBin){
 
 		uint8_t *data;
-		uint32_t imageSize = BlockIt(iBlock + imageHeaders[injectionNumber].lengthOfData);
+		uint32_t offset, originalOffset;
+		uint32_t imageSize = BlockIt(BLOCK + imageHeaders[injectionNumber].lengthOfData);
 
 		if( imageHeaders[injectionNumber].name[0] == 0){
 
@@ -320,7 +319,7 @@ int32_t ListFileDetails(FILE *originalLogoBin){
 		} else {
 
 			fprintf(stdout, "Copying \t#%d:%s\n", injectionNumber + 1 , imageHeaders[injectionNumber].name);
-
+			
 		}
 
 		data = malloc(imageSize);
@@ -328,19 +327,17 @@ int32_t ListFileDetails(FILE *originalLogoBin){
 		fread(data, 1, imageSize, originalLogoBin);
 		fwrite(data, 1 , imageSize, modifiedLogoBin);
 		free(data);
-
-	return 1;
 }
 
 int32_t InjectNewStyle(FILE *originalLogoBin, IMAGEHEAD *imageHeaders, uint16_t numberOfOffsets, uint8_t *injectionName, uint16_t injectionNumber, FILE *modifiedLogoBin, uint32_t *ihMainOffsets ){
 	
-		uint32_t encodedSize = 0, actualWritten = 0;
+		uint32_t encodedSize = 0, actualWritten = 0, imageSize = 0;
+		uint8_t *data, *header;
 		int8_t inFileName[69];
 		int32_t blockDifference;
+		uint32_t offset, originalOffset;
 		FILE *pngFile;
-		uint16_t op3 = 0;
-		sprintf((char*)inFileName, "%s", injectionName);
-
+		sprintf(inFileName, "%s", injectionName);
 		
 		if (imageHeaders[injectionNumber].special != 1){
 
@@ -351,11 +348,11 @@ int32_t InjectNewStyle(FILE *originalLogoBin, IMAGEHEAD *imageHeaders, uint16_t 
 
 		}
 
-		if ((pngFile = fopen((const char*)inFileName, "rb")) == NULL){
+		if ((pngFile = fopen(inFileName, "rb")) == NULL){
 
-			sprintf((char*)inFileName, "%s.png", injectionName);
+			sprintf(inFileName, "%s.png", injectionName);
 
-			if ((pngFile = fopen((const char*)inFileName, "rb")) == NULL){
+			if ((pngFile = fopen(inFileName, "rb")) == NULL){
 
 				fclose(pngFile);
 				fclose(modifiedLogoBin);
@@ -371,10 +368,11 @@ int32_t InjectNewStyle(FILE *originalLogoBin, IMAGEHEAD *imageHeaders, uint16_t 
 		memset(new.blank, 0, sizeof(new.blank));
 		memset(new.metaData, 0, sizeof(new.metaData));
 		memset(new.offsets, 0, SIZEOFLONGINT * MAXOFFSETS);
-		memset(new.name, 0, sizeof(new.name));
-		strncpy((char*)new.header, (const char*)HEADER , 8);
-		strncpy((char*)new.metaData, (const char*)imageHeaders[injectionNumber].metaData, sizeof(imageHeaders[injectionNumber].metaData));
-		strncpy((char*)new.name, (const char*)injectionName, 64);
+		memset(new.extra, 0, sizeof(new.extra));
+	
+		strncpy(new.header, HEADER , 8);
+		strncpy(new.metaData, imageHeaders[injectionNumber].metaData, sizeof(imageHeaders[injectionNumber].metaData));
+		strncpy(new.name, injectionName, 64);
 		new.special = 1;
 
 		fprintf(stdout, "Injecting\t#%d:%s\n", injectionNumber + 1 , imageHeaders[injectionNumber].name);
@@ -404,7 +402,7 @@ int32_t InjectNewStyle(FILE *originalLogoBin, IMAGEHEAD *imageHeaders, uint16_t 
 		uint32_t rawBytes = new.width * new.height * BYTESPERPIXEL;
 		uint8_t *decodedPNG = malloc(rawBytes);
 
-		lodepng_decode24_file(&decodedPNG, (uint32_t*)&new.width, (uint32_t*)&new.height , (const char*)inFileName);
+		lodepng_decode24_file(&decodedPNG, (uint32_t*)&new.width, (uint32_t*)&new.height , (const uint8_t*)inFileName);
 
 		if (rgb2bgr == 1){
 
@@ -426,13 +424,9 @@ int32_t InjectNewStyle(FILE *originalLogoBin, IMAGEHEAD *imageHeaders, uint16_t 
 		uint8_t *rlEncoded = malloc(BlockIt(encodedSize));
 		memset(rlEncoded, 0, BlockIt(encodedSize));
 		actualWritten = Encode(decodedPNG, rlEncoded, (new.width * new.height * BYTESPERPIXEL));
-		blockDifference = (((iBlock + BlockIt(actualWritten)) - (iBlock + BlockIt(imageHeaders[injectionNumber].lengthOfData))) / iBlock);
-		fwrite(&new, 1 , 512, modifiedLogoBin);
-
-		for (op3 = 0; op3 < iBlock - 512; op3++){
-			fputc(0, modifiedLogoBin);
-		}
-
+		blockDifference = (((BLOCK + BlockIt(actualWritten)) - (BLOCK + BlockIt(imageHeaders[injectionNumber].lengthOfData))) / BLOCK);
+		fwrite(&new, 1 , BLOCK, modifiedLogoBin);
+		fwrite(0, 1, BLOCK - sizeof(new), modifiedLogoBin);
 		fwrite(rlEncoded, 1 , BlockIt(actualWritten), modifiedLogoBin);
 		free(decodedPNG);
 		free(rlEncoded);
@@ -440,14 +434,13 @@ int32_t InjectNewStyle(FILE *originalLogoBin, IMAGEHEAD *imageHeaders, uint16_t 
 		RewriteHeaderZero( injectionNumber , numberOfOffsets , modifiedLogoBin , blockDifference, ihMainOffsets);
 
 		fclose(pngFile);
-		
 
 		return 1;
 }
 
 int32_t RewriteHeaderZero( uint32_t injectionImageNumber , uint16_t numberOfOffsets, FILE *modifiedLogoBin , int32_t blockDifference, uint32_t *ihMainOffsets){
 
-	uint8_t j = injectionImageNumber + 1 ;
+	uint8_t i, j = injectionImageNumber + 1 ;
 	uint32_t filePosition = ftell(modifiedLogoBin);
 	uint32_t offset = 0;
 
@@ -455,8 +448,7 @@ int32_t RewriteHeaderZero( uint32_t injectionImageNumber , uint16_t numberOfOffs
 
 		fseek(modifiedLogoBin, OFFSETSTART + (SIZEOFLONGINT * j), SEEK_SET);
 		offset = ihMainOffsets[j];
-		offset += (blockDifference * iBlock);
-
+		offset += (blockDifference * BLOCK);
 		fseek(modifiedLogoBin, OFFSETSTART + (SIZEOFLONGINT * j), SEEK_SET);
 		fwrite(&offset, 1 , SIZEOFLONGINT , modifiedLogoBin);
 		ihMainOffsets[j] = offset;
@@ -464,8 +456,8 @@ int32_t RewriteHeaderZero( uint32_t injectionImageNumber , uint16_t numberOfOffs
 	}
 
 	fseek(modifiedLogoBin, filePosition , SEEK_SET);
-
-return 1;
+	
+return;
 }
 
 uint32_t GetEncodedSize(uint8_t* data, uint32_t size){
@@ -535,7 +527,7 @@ uint32_t GetHeight(FILE *pngFile){
 
 uint64_t BlockIt(uint32_t isize){
 
-	uint32_t blockSize = iBlock;
+	uint32_t blockSize = BLOCK;
 
 	if ((isize % blockSize) == 0){
 
@@ -550,7 +542,7 @@ uint64_t BlockIt(uint32_t isize){
 
 void Usage(){
 
-	fprintf(stdout, "Usage: OP3Inject -i \"input file\" [-l] | [-L] | [-d [-s]] | [-j \"image to be replaced\" [-b] | [-s]]\n\n");
+	fprintf(stdout, "Usage: logoinjector -i \"input file\" [-l] | [-L] | [-d [-s]] | [-j \"image to be replaced\" [-b] | [-s]]\n\n");
 	fprintf(stdout, "Mandatory Arguments:\n\n");
 	fprintf(stdout, "\t-i \"C:\\xda\\logo.bin\"\n");
 	fprintf(stdout, "\t   This is the logo.bin file to analyze or inject an image\n\n");
@@ -560,20 +552,19 @@ void Usage(){
 	fprintf(stdout, "\t-L Upper case 'L' is for a more detailed list of logo.bin image contents.\n");
 	fprintf(stdout, "\t-b 'b' is used to tell the program to disregard width or height differences\n");
 	fprintf(stdout, "\t   when encoding an image, the program also won't fail if it can't find a name\n");
-	fprintf(stdout, "\t   that can't be found on the inject list when encoding images. This switch\n");
-	fprintf(stdout, "\t   also keeps modified logo bins over 16 gb, instead of deleting them.\n");
+	fprintf(stdout, "\t   that can't be found on the inject list when encoding images\n");
 	fprintf(stdout, "\t-s 's' is used to swap RGB and BGR color order. Can be used on decoding or encoding.\n");
-	fprintf(stdout, "\t   The default color order is BGR. Using the \"-s\" switch\n");
-	fprintf(stdout, "\t   will result in a RGB color order. Bottom line: If you (-d)ecode the\n");
+	fprintf(stdout, "\t   NEW IN THIS V1.2: Swap is on by default, meaning the color order will be BGR. Using\n");
+	fprintf(stdout, "\t   the \"-s\" switch will result in a RGB color order. Bottom line: If you (-d)ecode the\n");
 	fprintf(stdout, "\t   images (that have color) and the colors aren't right, then you should use (-s) to \n");
 	fprintf(stdout, "\t   decode and inject images.\n");
 	fprintf(stdout, "\t-j \"image(s) to be replaced\"\n");
 	fprintf(stdout, "\t   The image(s) name to be replaced as seen in the (-l)ist\n");
-	fprintf(stdout, "\t   Multiple image names may be put after \"-j\"\n");
-	fprintf(stdout, "\t   The names simply need to be separated by a space. The names also are not case\n");
+	fprintf(stdout, "\t   NEW IN THIS V1.2: Multiple image names may be put after \"-j\"\n");
+	fprintf(stdout, "\t   The names simply need to be separated by a space. The names now also are not case\n");
 	fprintf(stdout, "\t   sensitive, and it doesn't matter if you put the extension at the end of the name.\n");
 	fprintf(stdout, "\t   You actually only need to put the first characters of the name.\nExample:\n");
-	fprintf(stdout, "\t   OP3Inject -i \"your_logo.bin\" -j FHD \n\n");
+	fprintf(stdout, "\t   logoinjector -i \"your_logo.bin\" -j FHD \n\n");
 	fprintf(stdout, "\t   This will inject a PNG for every name in the logo bin that begins with \"fhd\"\n");
 
 	return;
@@ -606,7 +597,7 @@ uint32_t GetFileSize(FILE *temp){
 return(fileSizeZ);
 }
 
-int32_t main(int32_t argc, char** argv){
+int32_t main(int32_t argc, int8_t **argv){
 
 	int32_t c;
 	int16_t h, i , j , k = 0;
@@ -614,6 +605,7 @@ int32_t main(int32_t argc, char** argv){
 	uint8_t *inputFile = NULL;
 	uint8_t *injectNames[MAXOFFSETS];
 	int16_t decodeAllOpt = 0;
+	int16_t encodeOpt = 0;
 	int16_t inject = 0;
 	int16_t listFile = 0;
 	uint16_t numberOfOffsets = 0, injected = 0;
@@ -625,7 +617,7 @@ int32_t main(int32_t argc, char** argv){
 	}
 
 	fprintf(stdout, "__________________________________________________________-_-\n");
-	fprintf(stdout, "Logo Injector v1.4\n\nWritten By Makers_Mark @ XDA-DEVELOPERS.COM\n");
+	fprintf(stdout, "Logo Injector v1.2\n\nWritten By Makers_Mark @ XDA-DEVELOPERS.COM\n");
 	fprintf(stdout, "_____________________________________________________________\n\n");
 
 	while ((c = getopt (argc, (char**)argv, "sSj:J:hHbBdDlLi:I:")) != -1){
@@ -646,7 +638,7 @@ int32_t main(int32_t argc, char** argv){
 			case 'i':
 			case 'I':
 
-				inputFile = (uint8_t*)optarg;
+				inputFile = optarg;
 				break;
 
 			case 'b':
@@ -664,7 +656,7 @@ int32_t main(int32_t argc, char** argv){
 				while(h < argc){
 
 					inject = 1;
-					nextArg = (uint8_t*)strdup(argv[h]);
+					nextArg = strdup(argv[h]);
 					h++;
 
 					if(nextArg[0] != '-'){
@@ -726,7 +718,7 @@ int32_t main(int32_t argc, char** argv){
 
 	}
 
-	if ((originalLogoBin = fopen((const char*)inputFile, "rb")) == NULL){
+	if ((originalLogoBin = fopen(inputFile, "rb")) == NULL){
 
 		fprintf(stderr, "%s could not be opened\n", inputFile);
 		return 0;
@@ -754,7 +746,7 @@ int32_t main(int32_t argc, char** argv){
 
 	if (listFile){
 
-		ListFileDetails(originalLogoBin);
+		ListFileDetails(originalLogoBin, imageHeaders);
 		return 1;
 
 	}
@@ -774,8 +766,8 @@ int32_t main(int32_t argc, char** argv){
 
 			for (i = 0 ;  i < numberOfOffsets ; i++ ){
 
-				if((strcasecmp((const char*)imageHeaders[i].name, (const char*)injectNames[j]) == 0) ||
-				   (strncasecmp((const char*)imageHeaders[i].name, (const char*)injectNames[j], strlen((const char*)injectNames[j])) == 0)){
+				if((strcasecmp(imageHeaders[i].name, injectNames[j]) == 0) ||
+				   (strncasecmp(imageHeaders[i].name, injectNames[j], strlen(injectNames[j])) == 0)){
 
 					found = 1;
 					break;
@@ -817,8 +809,8 @@ int32_t main(int32_t argc, char** argv){
 
 			for (j = 0; j < k ; j++){
 
-				if((strcasecmp((const char*)imageHeaders[i].name, (const char*)injectNames[j]) == 0) ||
-				    (strncasecmp((const char*)imageHeaders[i].name, (const char*)injectNames[j], strlen((const char*)injectNames[j])) == 0)){
+				if((strcasecmp(imageHeaders[i].name, injectNames[j]) == 0) ||
+				    (strncasecmp(imageHeaders[i].name, injectNames[j], strlen(injectNames[j])) == 0)){
 
 					if (InjectNewStyle(originalLogoBin, imageHeaders , numberOfOffsets, imageHeaders[i].name, i, modifiedLogoBin, ihMainOffsets) == 0){
 
@@ -847,6 +839,8 @@ int32_t main(int32_t argc, char** argv){
 			}
 		}
 
+		uint16_t modifiedNumberOfOffsets = 0;
+
 		if (GetNumberOfOffsets(modifiedLogoBin) != numberOfOffsets){
 
 			fprintf(stderr, "ERROR: The number of offsets doesn't match the Original file!!\n");
@@ -861,39 +855,17 @@ int32_t main(int32_t argc, char** argv){
 			exit(0);
 
 		}
-
-		fclose(modifiedLogoBin);
-
 		fprintf(stdout, "\n\nContents of the NEW \"modified.logo.bin\":\n");
 		fprintf(stdout, "VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV\n\n");
-		FILE *newModified;
-		if ((newModified = fopen("modified.logo.bin", "rb")) == NULL){
-
-			fclose(originalLogoBin);
-			fprintf(stderr, "modified.logo.bin could not be opened\n");
-			return 0;
-
-		}
-
-		ListFileDetails(newModified);
+		
+		ListFileDetails(modifiedLogoBin, imageHeaders);
 		fprintf(stdout, "\n\n_____________________________________________________________\nOriginal filesize: ");
 		PrintFileSize(GetFileSize(originalLogoBin));
 		fprintf(stdout, "Modified filesize: ");
-		PrintFileSize(GetFileSize(newModified));
+		PrintFileSize(GetFileSize(modifiedLogoBin));
 		fprintf(stdout, "-------------------------------------------------------------\n");
-
-		if (GetFileSize(newModified) > 0x1000000){
-			fprintf(stdout, "\nTHE MODIFIED.LOGO.BIN IS LARGER THAN 16 GIGABYTES!\n");
-			fprintf(stdout, "THE SPLASH PARTITION ON THE ONEPLUS 3 IS NOT BIG \n");
-			fprintf(stdout, "ENOUGH TO HOLD THIS MODIFIED LOGO!\n");
-			if (!badAss){
-				fclose(newModified);
-				unlink("modified.logo.bin");
-				return 0;
-			}
-		}	
 		fclose(originalLogoBin);
-		fclose(newModified);
+		fclose(modifiedLogoBin);
 
 		return 1;
 	}		
@@ -908,6 +880,6 @@ int32_t main(int32_t argc, char** argv){
 
 	fclose(originalLogoBin);
 	return 1;
-
+	
 }
 
