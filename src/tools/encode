@@ -24,7 +24,7 @@ do
         "OnePlus 1")
             echo  -e "${RED}Packing logo.bin...${NC}"
             cd output
-            ./injector-op1 -i logo.bin -j 1-logo.png 2-at.png 3-charger.png 4-fastboot.png 5-lowpower.png 6-rf.png 7-wlan.png
+            ./injector -i logo.bin -j 1-logo.png 2-at.png 3-charger.png 4-fastboot.png 5-lowpower.png 6-rf.png 7-wlan.png
             cd ../
             sleep 1
             echo  -e "${LG}All Done!${NC}"
@@ -33,16 +33,16 @@ do
         "OnePlus X")
             echo  -e "${RED}Packing logo.bin...${NC}"
             cd output
-            echo  -e "${LG}ERROR someone needs to send me this file${NC}"
+            echo -e "${LG}ERROR someone needs to send me this file${NC}"
             cd ../
             sleep 1
             echo  -e "${LG}All Done!${NC}"
             ./inject
             ;;
         "OnePlus 2")
-            echo  -e "${RED}Packing logo.bin...${NC}"
+            echo -e "${RED}Packing logo.bin...${NC}"
             cd output
-            ./injector- -i logo.bin -j fhd_oppo fhd_at
+            ./injector -i logo.bin -j fhd_oppo fhd_at
             cd ../
             sleep 1
             echo  -e "${LG}All Done!${NC}"
@@ -51,7 +51,7 @@ do
         "OnePlus 3/3t")
             echo  -e "${RED}Packing logo.bin...${NC}"
             cd output
-            ./injector- -i logo.bin -j fhd_oppo fhd_at
+            ./injector -i logo.bin -j fhd_oppo fhd_at
             cd ../
             sleep 1
             echo  -e "${LG}All Done!${NC}"
@@ -60,7 +60,7 @@ do
         "OnePlus 5")
             echo  -e "${RED}Packing logo.bin...${NC}"
             cd output
-            ./injector- -i logo.bin -j fhd_oppo fhd_at
+            ./injector-op5 -i logo.bin -j fhd_oppo fhd_at
             cd ../
             sleep 1
             echo  -e "${LG}All Done!${NC}"

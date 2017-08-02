@@ -1,5 +1,5 @@
-ui_print("SplashInjector by ethanbanker2428")
-ui_print("Credit to @makers_mark")
+ui_print("SplashInjector by ethanbanker2428");
+ui_print("Credit to @makers_mark");
 ui_print("Loading");
 ui_print(">bootlogo");
 mount("ext4", "EMMC", "/dev/block/platform/msm_sdcc.1/by-name/system", "/system", "");

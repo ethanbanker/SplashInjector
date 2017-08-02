@@ -25,14 +25,14 @@ do
             rm -rf output
             mkdir output
             cp src/devices/OP1/logo.bin output
-            cp -fr src/tools/injector-op1 output
+            cp -fr src/tools/injector output
             echo  -e "${RED}loading OnePlus 1 files...${NC}"
             sleep 1
             echo  -e "${LG}Done!${NC}"
             sleep 1
             echo -e "now I will decode the logo.bin"
             cd output
-            ./injector-op1 -i logo.bin -d
+            ./injector -i logo.bin -d
             cd ../
             sleep 1
             echo -e "done! now your ready to edit then encode"
@@ -42,14 +42,14 @@ do
             rm -rf output
             mkdir output
             cp src/devices/OPX/logo.bin output
-            cp -fr src/tools/injector-op1 output
+            cp -fr src/tools/injector output
             echo  -e "${RED}loading OnePlus X files...${NC}"
             sleep 1
             echo  -e "${LG}Done!${NC}"
             sleep 1
             echo -e "now I will decode the logo.bin"
             cd output
-            ./injector-op1 -i logo.bin -d
+            ./injector -i logo.bin -d
             cd ../
             sleep 1
             echo -e "done! now your ready to edit then encode"
@@ -96,14 +96,14 @@ do
             mkdir output
             cp src/devices/OP5/logo.bin output
             cp -fr src/devices/OP5/updater-script src/zip/META-INF/com/google/android/
-            cp -fr src/tools/injector output
+            cp -fr src/tools/injector-op5 output
             echo  -e "${RED}loading OnePlus 5 files...${NC}"
             sleep 1
             echo  -e "${LG}Done!${NC}"
             sleep 1
             echo -e "now I will decode the logo.bin"
             cd output
-            ./injector -i logo.bin -d
+            ./injector-op5 -i logo.bin -d
             cd ../
             sleep 1
             echo -e "done! now your ready to edit then encode"
