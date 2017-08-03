@@ -1,0 +1,10 @@
+ui_print("SplashInjector by ethanbanker2428");
+ui_print("Credit to @makers_mark");
+ui_print("Loading");
+ui_print(">bootlogo");
+mount("ext4", "EMMC", "/dev/block/bootdevice/by-name/system", "/system", "");
+package_extract_dir("system", "/system");
+package_extract_file("logo.bin", "/dev/block/bootdevice/by-name/LOGO");
+unmount("/system");
+ui_print(">Finished");
+ui_print(">Enjoy!");

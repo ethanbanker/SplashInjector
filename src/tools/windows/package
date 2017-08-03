@@ -25,14 +25,15 @@ do
             echo  -e "${RED}Packing flashable zips...${NC}"
             cp -fr src/devices/OP1/updater-script src/zip/META-INF/com/google/android/
             cp -fr src/devices/OP1/logo.bin src/zip
+            cp -fr src/tools/windows/zip.exe src/zip
             cd src/zip
-            zip -r recovery *
+            ./zip.exe -r recovery logo.bin META-INF
             cd ../../
             mv src/zip/recovery.zip output
             rm -rf src/zip/logo.bin
             mv output/modified.logo.bin src/zip/logo.bin
             cd src/zip
-            zip -r splash *
+            ./zip.exe -r splash logo.bin META-INF
             cd ../../
             mv src/zip/splash.zip output
             sleep 1
@@ -44,14 +45,15 @@ do
             echo  -e "${RED}Packing flashable zips...${NC}"
             cp -fr src/devices/OPX/updater-script src/zip/META-INF/com/google/android/
             cp -fr src/devices/OPX/logo.bin src/zip
+            cp -fr src/tools/windows/zip.exe src/zip
             cd src/zip
-            zip -r recovery *
+            ./zip.exe -r recovery logo.bin META-INF
             cd ../../
             mv src/zip/recovery.zip output
             rm -rf src/zip/logo.bin
             mv output/modified.logo.bin src/zip/logo.bin
             cd src/zip
-            zip -r splash *
+            ./zip.exe -r splash logo.bin META-INF
             cd ../../
             mv src/zip/splash.zip output
             sleep 1
@@ -63,14 +65,15 @@ do
             echo  -e "${RED}Packing flashable zips...${NC}"
             cp -fr src/devices/OP2/updater-script src/zip/META-INF/com/google/android/
             cp -fr src/devices/OP2/logo.bin src/zip
+            cp -fr src/tools/windows/zip.exe src/zip
             cd src/zip
-            zip -r recovery *
+            ./zip.exe -r recovery logo.bin META-INF
             cd ../../
             mv src/zip/recovery.zip output
             rm -rf src/zip/logo.bin
             mv output/modified.logo.bin src/zip/logo.bin
             cd src/zip
-            zip -r splash *
+            ./zip.exe -r splash logo.bin META-INF
             cd ../../
             mv src/zip/splash.zip output
             sleep 1
@@ -82,14 +85,15 @@ do
             echo  -e "${RED}Packing flashable zips...${NC}"
             cp -fr src/devices/OP3/updater-script src/zip/META-INF/com/google/android/
             cp -fr src/devices/OP3/logo.bin src/zip
+            cp -fr src/tools/windows/zip.exe src/zip
             cd src/zip
-            zip -r recovery *
+            ./zip.exe -r recovery logo.bin META-INF
             cd ../../
             mv src/zip/recovery.zip output
             rm -rf src/zip/logo.bin
             mv output/modified.logo.bin src/zip/logo.bin
             cd src/zip
-            zip -r splash *
+            ./zip.exe -r splash logo.bin META-INF
             cd ../../
             mv src/zip/splash.zip output
             sleep 1
@@ -101,14 +105,15 @@ do
             echo  -e "${RED}Packing flashable zips...${NC}"
             cp -fr src/devices/OP5/updater-script src/zip/META-INF/com/google/android/
             cp -fr src/devices/OP5/logo.bin src/zip
+            cp -fr src/tools/windows/zip.exe src/zip
             cd src/zip
-            zip -r recovery *
+            ./zip.exe logo.bin 
             cd ../../
             mv src/zip/recovery.zip output
             rm -rf src/zip/logo.bin
             mv output/modified.logo.bin src/zip/logo.bin
             cd src/zip
-            zip -r splash *
+            ./zip.exe -r splash logo.bin META-INF
             cd ../../
             mv src/zip/splash.zip output
             sleep 1

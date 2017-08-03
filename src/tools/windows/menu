@@ -38,6 +38,7 @@ do
             rm -rf output
             rm -rf src/zip/logo.bin
             rm -rf src/zip/META-INF/com/google/android/updater-script
+            rm -rf src/zip/zip.exe
             echo -e "${LG}all clean...${NC}"
             sleep 1
             ./src/tools/windows/menu
