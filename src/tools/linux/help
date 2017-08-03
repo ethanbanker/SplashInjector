@@ -59,4 +59,5 @@ sleep 1
 
 echo -e "${RED}Press any key when your done${NC}"
 read -n 1 -s -r -p ""
-./inject
+./src/tools/linux/menu
+break

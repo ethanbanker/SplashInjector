@@ -1,0 +1,121 @@
+#bin/bash
+# Black        0;30     Dark Gray     1;30
+# Red          0;31     Light Red     1;31
+# Green        0;32     Light Green   1;32
+# Brown/Orange 0;33     Yellow        1;33
+# Blue         0;34     Light Blue    1;34
+# Purple       0;35     Light Purple  1;35
+# Cyan         0;36     Light Cyan    1;36
+# Light Gray   0;37     White         1;37
+RED='\033[0;31m'
+NC='\033[0m' # No Color
+LG='\033[1;32m'
+
+clear
+echo  -e "${LG}NOW WELL PACK YOUR FLASHABLE ZIPS${NC}"
+sleep 1
+
+COLUMNS=11
+PS3='Choose your device: '
+options=("OnePlus 1" "OnePlus X" "OnePlus 2" "OnePlus 3/3t" "OnePlus 5")
+select opt in "${options[@]}"
+do
+    case $opt in
+        "OnePlus 1")
+            echo  -e "${RED}Packing flashable zips...${NC}"
+            cp -fr src/devices/OP1/updater-script src/zip/META-INF/com/google/android/
+            cp -fr src/devices/OP1/logo.bin src/zip
+            cd src/zip
+            zip -r recovery *
+            cd ../../
+            mv src/zip/recovery.zip output
+            rm -rf src/zip/logo.bin
+            mv output/modified.logo.bin src/zip/logo.bin
+            cd src/zip
+            zip -r splash *
+            cd ../../
+            mv src/zip/splash.zip output
+            sleep 1
+            echo  -e "${LG}All Done! its located in the output folder${NC}"
+            ./src/tools/windows/menu
+            break
+            ;;
+        "OnePlus X")
+            echo  -e "${RED}Packing flashable zips...${NC}"
+            cp -fr src/devices/OPX/updater-script src/zip/META-INF/com/google/android/
+            cp -fr src/devices/OPX/logo.bin src/zip
+            cd src/zip
+            zip -r recovery *
+            cd ../../
+            mv src/zip/recovery.zip output
+            rm -rf src/zip/logo.bin
+            mv output/modified.logo.bin src/zip/logo.bin
+            cd src/zip
+            zip -r splash *
+            cd ../../
+            mv src/zip/splash.zip output
+            sleep 1
+            echo  -e "${LG}All Done! its located in the output folder${NC}"
+            ./src/tools/windows/menu
+            break
+            ;;
+        "OnePlus 2")
+            echo  -e "${RED}Packing flashable zips...${NC}"
+            cp -fr src/devices/OP2/updater-script src/zip/META-INF/com/google/android/
+            cp -fr src/devices/OP2/logo.bin src/zip
+            cd src/zip
+            zip -r recovery *
+            cd ../../
+            mv src/zip/recovery.zip output
+            rm -rf src/zip/logo.bin
+            mv output/modified.logo.bin src/zip/logo.bin
+            cd src/zip
+            zip -r splash *
+            cd ../../
+            mv src/zip/splash.zip output
+            sleep 1
+            echo  -e "${LG}All Done! its located in the output folder${NC}"
+            ./src/tools/windows/menu
+            break
+            ;;
+        "OnePlus 3/3t")
+            echo  -e "${RED}Packing flashable zips...${NC}"
+            cp -fr src/devices/OP3/updater-script src/zip/META-INF/com/google/android/
+            cp -fr src/devices/OP3/logo.bin src/zip
+            cd src/zip
+            zip -r recovery *
+            cd ../../
+            mv src/zip/recovery.zip output
+            rm -rf src/zip/logo.bin
+            mv output/modified.logo.bin src/zip/logo.bin
+            cd src/zip
+            zip -r splash *
+            cd ../../
+            mv src/zip/splash.zip output
+            sleep 1
+            echo  -e "${LG}All Done! its located in the output folder${NC}"
+            ./src/tools/windows/menu
+            break
+            ;;
+        "OnePlus 5")
+            echo  -e "${RED}Packing flashable zips...${NC}"
+            cp -fr src/devices/OP5/updater-script src/zip/META-INF/com/google/android/
+            cp -fr src/devices/OP5/logo.bin src/zip
+            cd src/zip
+            zip -r recovery *
+            cd ../../
+            mv src/zip/recovery.zip output
+            rm -rf src/zip/logo.bin
+            mv output/modified.logo.bin src/zip/logo.bin
+            cd src/zip
+            zip -r splash *
+            cd ../../
+            mv src/zip/splash.zip output
+            sleep 1
+            echo  -e "${LG}All Done! its located in the output folder${NC}"
+            ./src/tools/windows/menu
+            break
+            ;;
+        *) echo invalid device;;
+    esac
+done

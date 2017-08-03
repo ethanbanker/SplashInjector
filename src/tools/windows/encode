@@ -24,11 +24,12 @@ do
         "OnePlus 1")
             echo  -e "${RED}Packing logo.bin...${NC}"
             cd output
-            ./injector -i logo.bin -j 1-logo.png 2-at.png 3-charger.png 4-fastboot.png 5-lowpower.png 6-rf.png 7-wlan.png
+            ./injector.exe -i logo.bin -j 1-logo.png 2-at.png 3-charger.png 4-fastboot.png 5-lowpower.png 6-rf.png 7-wlan.png
             cd ../
             sleep 1
             echo  -e "${LG}All Done!${NC}"
-            ./inject
+            ./src/tools/windows/menu
+            break
             ;;
         "OnePlus X")
             echo  -e "${RED}Packing logo.bin...${NC}"
@@ -37,34 +38,38 @@ do
             cd ../
             sleep 1
             echo  -e "${LG}All Done!${NC}"
-            ./inject
+            ./src/tools/windows/menu
+            break
             ;;
         "OnePlus 2")
             echo -e "${RED}Packing logo.bin...${NC}"
             cd output
-            ./injector -i logo.bin -j fhd_oppo fhd_at
+            ./injector.exe -i logo.bin -j fhd_oppo fhd_at
             cd ../
             sleep 1
             echo  -e "${LG}All Done!${NC}"
-            ./inject
+            ./src/tools/windows/menu
+            break
             ;;
         "OnePlus 3/3t")
             echo  -e "${RED}Packing logo.bin...${NC}"
             cd output
-            ./injector -i logo.bin -j fhd_oppo fhd_at
+            ./injector.exe -i logo.bin -j fhd_oppo fhd_at
             cd ../
             sleep 1
             echo  -e "${LG}All Done!${NC}"
-            ./inject
+            ./src/tools/windows/menu
+            break
             ;;
         "OnePlus 5")
             echo  -e "${RED}Packing logo.bin...${NC}"
             cd output
-            ./injector-op5 -i logo.bin -j fhd_oppo fhd_at
+            ./injector.exe -i logo.bin -j fhd_oppo fhd_at
             cd ../
             sleep 1
             echo  -e "${LG}All Done!${NC}"
-            ./inject
+            ./src/tools/windows/menu
+            break
             ;;
         *) echo invalid device;;
     esac

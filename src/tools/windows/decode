@@ -25,89 +25,94 @@ do
             rm -rf output
             mkdir output
             cp src/devices/OP1/logo.bin output
-            cp -fr src/tools/injector output
+            cp -fr src/tools/windows/injector.exe output
             echo  -e "${RED}loading OnePlus 1 files...${NC}"
             sleep 1
             echo  -e "${LG}Done!${NC}"
             sleep 1
             echo -e "now I will decode the logo.bin"
             cd output
-            ./injector -i logo.bin -d
+            ./injector.exe -i logo.bin -d
             cd ../
             sleep 1
             echo -e "done! now your ready to edit then encode"
-            ./inject
+            ./src/tools/windows/menu
+            break
             ;;
         "OnePlus X")
             rm -rf output
             mkdir output
             cp src/devices/OPX/logo.bin output
-            cp -fr src/tools/injector output
+            cp -fr src/tools/windows/injector.exe output
             echo  -e "${RED}loading OnePlus X files...${NC}"
             sleep 1
             echo  -e "${LG}Done!${NC}"
             sleep 1
             echo -e "now I will decode the logo.bin"
             cd output
-            ./injector -i logo.bin -d
+            ./injector.exe -i logo.bin -d
             cd ../
             sleep 1
             echo -e "done! now your ready to edit then encode"
-            ./inject
+            ./src/tools/windows/menu
+            break
             ;;
         "OnePlus 2")
             rm -rf output
             mkdir output
             cp src/devices/OP2/logo.bin output
             cp -fr src/devices/OP2/updater-script src/zip/META-INF/com/google/android/
-            cp -fr src/tools/injector output
+            cp -fr src/tools/windows/injector.exe output
             echo  -e "${RED}loading OnePlus 2 files...${NC}"
             sleep 1
             echo  -e "${LG}Done!${NC}"
             sleep 1
             echo -e "now I will decode the logo.bin"
             cd output
-            ./injector -i logo.bin -d
+            ./injector.exe -i logo.bin -d
             cd ../
             sleep 1
             echo -e "done! now your ready to edit then encode"
-            ./inject
+            ./src/tools/windows/menu
+            break
             ;;
         "OnePlus 3/3t")
             rm -rf output
             mkdir output
             cp src/devices/OP3/logo.bin output
             cp -fr src/devices/OP3/updater-script src/zip/META-INF/com/google/android/
-            cp -fr src/tools/injector output
+            cp -fr src/tools/windows/injector.exe output
             echo  -e "${RED}loading OnePlus 3/3t files...${NC}"
             sleep 1
             echo  -e "${LG}Done!${NC}"
             sleep 1
             echo -e "now I will decode the logo.bin"
             cd output
-            ./injector -i logo.bin -d
+            ./injector.exe -i logo.bin -d
             cd ../
             sleep 1
             echo -e "done! now your ready to edit then encode"
-            ./inject
+            ./src/tools/windows/menu
+            break
             ;;
         "OnePlus 5")
             rm -rf output
             mkdir output
             cp src/devices/OP5/logo.bin output
             cp -fr src/devices/OP5/updater-script src/zip/META-INF/com/google/android/
-            cp -fr src/tools/injector-op5 output
+            cp -fr src/tools/windows/injector.exe output
             echo  -e "${RED}loading OnePlus 5 files...${NC}"
             sleep 1
             echo  -e "${LG}Done!${NC}"
             sleep 1
             echo -e "now I will decode the logo.bin"
             cd output
-            ./injector-op5 -i logo.bin -d
+            ./injector.exe -i logo.bin -d
             cd ../
             sleep 1
             echo -e "done! now your ready to edit then encode"
-            ./inject
+            ./src/tools/windows/menu
+            break
             ;;
         *) echo invalid device;;
     esac

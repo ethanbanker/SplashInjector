@@ -24,7 +24,7 @@ do
         "OnePlus 1")
             echo  -e "${RED}Packing flashable zips...${NC}"
             cp -fr src/devices/OP1/updater-script src/zip/META-INF/com/google/android/
-            cp -fr output/logo.bin src/zip
+            cp -fr src/devices/OP1/logo.bin src/zip
             cd src/zip
             zip -r recovery *
             cd ../../
@@ -37,12 +37,13 @@ do
             mv src/zip/splash.zip output
             sleep 1
             echo  -e "${LG}All Done! its located in the output folder${NC}"
-            ./inject
+            ./src/tools/linux/menu
+            break
             ;;
         "OnePlus X")
             echo  -e "${RED}Packing flashable zips...${NC}"
             cp -fr src/devices/OPX/updater-script src/zip/META-INF/com/google/android/
-            cp -fr output/logo.bin src/zip
+            cp -fr src/devices/OPX/logo.bin src/zip
             cd src/zip
             zip -r recovery *
             cd ../../
@@ -55,12 +56,13 @@ do
             mv src/zip/splash.zip output
             sleep 1
             echo  -e "${LG}All Done! its located in the output folder${NC}"
-            ./inject
+            ./src/tools/linux/menu
+            break
             ;;
         "OnePlus 2")
             echo  -e "${RED}Packing flashable zips...${NC}"
             cp -fr src/devices/OP2/updater-script src/zip/META-INF/com/google/android/
-            cp -fr output/logo.bin src/zip
+            cp -fr src/devices/OP2/logo.bin src/zip
             cd src/zip
             zip -r recovery *
             cd ../../
@@ -73,12 +75,13 @@ do
             mv src/zip/splash.zip output
             sleep 1
             echo  -e "${LG}All Done! its located in the output folder${NC}"
-            ./inject
+            ./src/tools/linux/menu
+            break
             ;;
         "OnePlus 3/3t")
             echo  -e "${RED}Packing flashable zips...${NC}"
             cp -fr src/devices/OP3/updater-script src/zip/META-INF/com/google/android/
-            cp -fr output/logo.bin src/zip
+            cp -fr src/devices/OP3/logo.bin src/zip
             cd src/zip
             zip -r recovery *
             cd ../../
@@ -91,12 +94,13 @@ do
             mv src/zip/splash.zip output
             sleep 1
             echo  -e "${LG}All Done! its located in the output folder${NC}"
-            ./inject
+            ./src/tools/linux/menu
+            break
             ;;
         "OnePlus 5")
             echo  -e "${RED}Packing flashable zips...${NC}"
             cp -fr src/devices/OP5/updater-script src/zip/META-INF/com/google/android/
-            cp -fr output/logo.bin src/zip
+            cp -fr src/devices/OP5/logo.bin src/zip
             cd src/zip
             zip -r recovery *
             cd ../../
@@ -109,7 +113,8 @@ do
             mv src/zip/splash.zip output
             sleep 1
             echo  -e "${LG}All Done! its located in the output folder${NC}"
-            ./inject
+            ./src/tools/linux/menu
+            break
             ;;
         *) echo invalid device;;
     esac

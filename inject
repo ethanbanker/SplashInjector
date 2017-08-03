@@ -19,34 +19,29 @@ echo -e " Credit to @makers_mark${NC} "
 sleep 1
 
 echo -e "								"
-echo -e "${RED}Use the help option to learn a little about each step${NC}"
+echo -e "${RED}I AM NOT RESPONSIBLE IN ANY WAY FOR ANYTHING YOU DO${NC}"
 COLUMNS=13
-PS3='Choose an option: '
-options=("Decode logo.bin" "Encode logo.bin" "Package" "Clean" "Help" "Exit")
+PS3='Choose your OS: '
+options=("Linux/OSX" "Windows" "Exit")
 select opt in "${options[@]}"
 do
     case $opt in
-        "Decode logo.bin")
-            ./src/tools/decode
-            ;;
-        "Encode logo.bin")
-            ./src/tools/encode
-            ;;
-        "Package")
-            ./src/tools/package
-            ;;
-        "Clean")
-            rm -rf output
-            rm -rf src/zip/logo.bin
-            rm -rf src/zip/META-INF/com/google/android/updater-script
+        "Linux/OSX")
+            echo -e "${LG}You are using${NC} ${RED}LINUX${NC}"
             sleep 1
-            echo -e "${LG}all clean...${NC}"
+            ./src/tools/linux/menu
+            break
             ;;
-        "Help")
-            ./src/info/help
+        "Windows")
+        	echo -e "${RED}Make sure you install git bash for this to work${NC}"
+        	sleep 1
+            echo -e "${LG}You are using${NC} ${RED}WINDOWS${NC}"
+            sleep 1
+            ./src/tools/windows/menu
+            break
             ;;
         "Exit")
-            break
+        	break
             ;;
         *) echo invalid option;;
     esac
