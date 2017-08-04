@@ -65,7 +65,7 @@ echo -e "stops the script...you can also use ctrl+C but i dont recommend it"
 echo -e "											  "
 echo -e "${LG}option 7: Update${NC}"
 echo -e "Updates the SplashInjection tool...${RED}THIS WILL DELETE ALL YOUR FILES. YOUVE BEEN WARNED${NC}"
-echo -e "		
+echo -e "											  "
 sleep 1
 
 echo -e "${RED}Press any key when your done${NC}"
