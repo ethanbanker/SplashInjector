@@ -43,7 +43,7 @@ if [ ${OS} == LINUX ]
 then
     COLUMNS=13
     PS3='Choose an option: '
-    options=("Decode logo.bin" "Encode logo.bin" "Package" "Clean" "Help" "Exit" "Update")
+    options=("Decode logo.bin" "Encode logo.bin" "Package" "Clean" "Help" "Update" "Exit")
     select opt in "${options[@]}"
     do
     case $opt in
@@ -90,7 +90,7 @@ elif [ ${OS} == WINDOWS ]
 then
     COLUMNS=13
     PS3='Choose an option: '
-    options=("Decode logo.bin" "Encode logo.bin" "Package" "Clean" "Help" "Exit" "Update")
+    options=("Decode logo.bin" "Encode logo.bin" "Package" "Clean" "Help" "Update" "Exit")
     select opt in "${options[@]}"
     do
     case $opt in
@@ -122,9 +122,6 @@ then
             ./src/info/help
             break
             ;;
-        "Exit")
-            break
-            ;;
         "Update")
             cd ../
             rm -rf SplashInjector
@@ -133,6 +130,9 @@ then
             sleep 1
             echo -e "${LG}your all up to date!${NC}
             ./inject
+            break
+            ;;
+        "Exit")
             break
             ;;
         *) echo invalid option;;
