@@ -10,39 +10,135 @@
 RED='\033[0;31m'
 NC='\033[0m' # No Color
 LG='\033[1;32m'
+LB='\033[1;34m'
+
+unamestr=`uname`
+if [[ "$unamestr" == 'Linux' ]]; then
+   OS=LINUX
+elif [[ "$unamestr" == "darwin" ]]; then
+   OS=LINUX
+else
+   OS=WINDOWS
+fi
+VERSION=v1.52
 
 clear
-echo -e " ${RED}SPLASH INJECTOR${NC} "
+echo -e " ${RED}SPLASH INJECTOR ${NC}"${LG}${VERSION}${NC}
 echo -e " ${LG}BY ETHANBANKER2428 "
 echo -e " Credit to @makers_mark${NC} "
+echo -e " ${LB}Version:${NC}"${RED}${OS}${NC} ${LG}${VERSION}${NC}
 
 sleep 1
 
-echo -e "								"
+echo -e "                               "
 echo -e "${RED}I AM NOT RESPONSIBLE IN ANY WAY FOR ANYTHING YOU DO${NC}"
-COLUMNS=13
-PS3='Choose your OS: '
-options=("Linux/OSX" "Windows" "Exit")
-select opt in "${options[@]}"
-do
+echo -e "                               "
+echo -e "${RED}Use the help option to learn a little about each step${NC}"
+echo -e "                               "
+echo -e "${RED}IF YOUR USING WINBLOWS USE GIT BASH!!!!!!!!${NC}"
+
+sleep 1
+
+if [ ${OS} == LINUX ]
+then
+    COLUMNS=13
+    PS3='Choose an option: '
+    options=("Decode logo.bin" "Encode logo.bin" "Package" "Clean" "Help" "Exit" "Update")
+    select opt in "${options[@]}"
+    do
     case $opt in
-        "Linux/OSX")
-            echo -e "${LG}You are using${NC} ${RED}LINUX${NC}"
-            sleep 1
-            ./src/tools/linux/menu
+        "Decode logo.bin")
+            ./src/tools/decode
             break
             ;;
-        "Windows")
-        	echo -e "${RED}Make sure you install git bash for this to work${NC}"
-        	sleep 1
-            echo -e "${LG}You are using${NC} ${RED}WINDOWS${NC}"
+        "Encode logo.bin")
+            ./src/tools/encode
+            break
+            ;;
+        "Package")
+            ./src/tools/package
+            break
+            ;;
+        "Clean")
+            rm -rf output
+            rm -rf src/zip/logo.bin
+            rm -rf src/zip/META-INF/com/google/android/updater-script
+            echo -e "${LG}all clean...${NC}"
             sleep 1
-            ./src/tools/windows/menu
+            ./inject
+            break
+            ;;
+        "Help")
+            ./src/info/help
             break
             ;;
         "Exit")
-        	break
+            break
+            ;;
+        "Update")
+            cd ../
+            rm -rf SplashInjector
+            git clone https://github.com/ethanbanker2428/SplashInjector
+            cd SplashInjector
+            echo -e "${LG}your all up to date!${NC}
+            ./inject
+            break
+        *) echo invalid option;;
+        esac
+    done
+elif [ ${OS} == WINDOWS ]
+then
+    COLUMNS=13
+    PS3='Choose an option: '
+    options=("Decode logo.bin" "Encode logo.bin" "Package" "Clean" "Help" "Exit" "Update")
+    select opt in "${options[@]}"
+    do
+    case $opt in
+        "Decode logo.bin")
+            ./src/tools/decode
+            break
+            ;;
+        "Encode logo.bin")
+            ./src/tools/encode
+            break
+            ;;
+        "Package")
+            ./src/tools/package
+            break
+            ;;
+        "Clean")
+            rm -rf output
+            rm -rf src/zip/logo.bin
+            rm -rf src/zip/META-INF/com/google/android/updater-script
+            rm -rf src/tools/windows/zip/logo.bin
+            rm -rf src/tools/windows/zip/splash-op.zip
+            rm -rf src/tools/windows/zip/recovery-op.zip            
+            echo -e "${LG}all clean...${NC}"
+            sleep 1
+            ./inject
+            break
+            ;;
+        "Help")
+            ./src/info/help
+            break
+            ;;
+        "Exit")
+            break
+            ;;
+        "Update")
+            cd ../
+            rm -rf SplashInjector
+            git clone git://github.com/ethanbanker2428/SplashInjector
+            cd SplashInjector
+            sleep 1
+            echo -e "${LG}your all up to date!${NC}
+            ./inject
+            break
             ;;
         *) echo invalid option;;
-    esac
-done
+        esac
+    done
+else
+    echo -e "${RED}You are using a unsuppported system...to fix this run OS=LINUX in terminal then run it. SUPPORT IS NOT GUARANTEED${NC}"
+    break
+fi

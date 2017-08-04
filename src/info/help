@@ -11,6 +11,15 @@ RED='\033[0;31m'
 NC='\033[0m' # No Color
 LG='\033[1;32m'
 
+unamestr=`uname`
+if [[ "$unamestr" == 'Linux' ]]; then
+   OS=LINUX
+elif [[ "$unamestr" == "darwin" ]]; then
+   OS=LINUX
+else
+   OS=WINDOWS
+fi
+
 clear
 
 echo -e "ahhhhhh so here you are...need a little help?"
@@ -54,10 +63,12 @@ echo -e "											  "
 echo -e "${LG}option 6: Exit${NC}"
 echo -e "stops the script...you can also use ctrl+C but i dont recommend it"
 echo -e "											  "
-
+echo -e "${LG}option 7: Update${NC}"
+echo -e "Updates the SplashInjection tool...${RED}THIS WILL DELETE ALL YOUR FILES. YOUVE BEEN WARNED${NC}"
+echo -e "		
 sleep 1
 
 echo -e "${RED}Press any key when your done${NC}"
 read -n 1 -s -r -p ""
-./src/tools/linux/menu
+./inject
 break
