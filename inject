@@ -39,7 +39,7 @@ echo -e "${RED}IF YOUR USING WINBLOWS USE GIT BASH!!!!!!!!${NC}"
 
 sleep 1
 
-if [ ${OS} == LINUX ]
+if [ ${OS} == WINDOWS ]
 then
     COLUMNS=13
     PS3='Choose an option: '
@@ -85,7 +85,6 @@ then
             ;;
         *) echo invalid option;;
         esac
-    done
 elif [ ${OS} == WINDOWS ]
 then
     COLUMNS=13
@@ -140,5 +139,4 @@ then
     done
 else
     echo -e "${RED}You are using a unsuppported system...to fix this run OS=LINUX in terminal then run it. SUPPORT IS NOT GUARANTEED${NC}"
-    break
 fi

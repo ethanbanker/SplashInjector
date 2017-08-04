@@ -132,114 +132,104 @@ then
 	done
 elif [ ${OS} == WINDOWS ]
 then
-	COLUMNS=11
+    sleep 1
+    echo -e "${RED}SO UR USING WINDOWS...HERES THE DEAL I CANT PACKAGE ZIPS ON WINDOWS. BLAME MICROSOFT(IHY) SO HERES WHAT YOU DO. FIGURE OUT HOW TO ZIP IT YOURSELF OR FLASH WITH FASTBOOT${NC}"
+    echo -e "SORRY ABOUT THIS BUT I HAVE TRIED EVERYTHING. I RARELY EVER RUN WINDOWS. IF ANYONE HAS ANY IDEAS SUBMIT A PULL REQUEST. IVE PROVIDED THE FILES YOU NEED TO MAKE IT EASY IN OUTPUT/RECOVERY & OUTPUT/SPLASH"
+    echo -e "RECOVERY IS WHAT YOU USE TO GET BACK TO STOCK. SPLASH IS YOUR CUSTOM EDITED SPLASH SCREEN!${NC}"
+	sleep 1
+
+	echo -e "${RED}Do you understand?${NC}"
+	echo -e "${LG}Press any key to continue${NC}"
+	read -n 1 -s -r -p ""
+
+    COLUMNS=11
 	PS3='Choose your device: '
 	options=("OnePlus 1" "OnePlus X" "OnePlus 2" "OnePlus 3/3t" "OnePlus 5")
 	select opt in "${options[@]}"
 	do
     case $opt in
         "OnePlus 1")
-            echo  -e "${RED}Packing flashable zips...${NC}"
-            cp -fr src/devices/OP1/logo.bin src/tools/windows/zip
-            cp -fr src/tools/zip.exe src/tools/windows/zip
-            cp -fr src/tools/windows/recovery-op.zip src/tools/windows/zip
-            cp -fr src/tools/windows/splash-op.zip src/tools/windows/zip
-            cd src/tools/windows/zip
-            ./zip.exe -ur recovery-op.zip logo.bin
-            cd ../../../../
-            mv src/tools/windows/zip/recovery-op.zip output
-            rm -rf src/tools/windows/zip/logo.bin
-            mv output/modified.logo.bin src/tools/windows/zip/logo.bin
-            cd src/tools/windows/zip
-            ./zip.exe -ur splash-op.zip logo.bin
-            cd ../../../
-            mv src/tools/windows/zip/splash-op.zip output
-            sleep 1
-            echo  -e "${LG}All Done! its located in the output folder${NC}"
+            echo  -e "${RED}READ ABOVE MESSAGE SORRY...${NC}"
+            cd output
+            mkdir recovery
+            cd ../
+            cp -fr src/zip/META-INF output/recovery
+            cp -fr src/devices/OP1/logo.bin output/recovery/
+            cp -fr src/devices/OP1/updater-script output/recovery/META-INF/com/google/android/
+            cd output
+            mkdir splash
+            cd ../
+            cp -fr src/zip/META-INF output/splash
+            mv output/modified.logo.bin output/splash/logo.bin
+            cp -fr src/devices/OP1/updater-script output/splash/META-INF/com/google/android/
             ./inject
             break
             ;;
         "OnePlus X")
-            echo  -e "${RED}Packing flashable zips...${NC}"
-            cp -fr src/devices/OPX/logo.bin src/tools/windows/zip
-            cp -fr src/tools/zip.exe src/tools/windows/zip
-            cp -fr src/tools/windows/recovery-op.zip src/tools/windows/zip
-            cp -fr src/tools/windows/splash-op.zip src/tools/windows/zip
-            cd src/tools/windows/zip
-            ./zip.exe -ur recovery-op.zip logo.bin
-            cd ../../../../
-            mv src/tools/windows/zip/recovery-op.zip output
-            rm -rf src/tools/windows/zip/logo.bin
-            mv output/modified.logo.bin src/tools/windows/zip/logo.bin
-            cd src/tools/windows/zip
-            ./zip.exe -ur splash-op.zip logo.bin
-            cd ../../../
-            mv src/tools/windows/zip/splash-op.zip output
-            sleep 1
-            echo  -e "${LG}All Done! its located in the output folder${NC}"
+            echo  -e "${RED}READ ABOVE MESSAGE SORRY...${NC}"
+            cd output
+            mkdir recovery
+            cd ../
+            cp -fr src/zip/META-INF output/recovery
+            cp -fr src/devices/OPX/logo.bin output/recovery/
+            cp -fr src/devices/OPX/updater-script output/recovery/META-INF/com/google/android/
+            cd output
+            mkdir splash
+            cd ../
+            cp -fr src/zip/META-INF output/splash
+            mv output/modified.logo.bin output/splash/logo.bin
+            cp -fr src/devices/OPX/updater-script output/splash/META-INF/com/google/android/
             ./inject
             break
             ;;
         "OnePlus 2")
-            echo  -e "${RED}Packing flashable zips...${NC}"
-            cp -fr src/devices/OP2/logo.bin src/tools/windows/zip
-            cp -fr src/tools/zip.exe src/tools/windows/zip
-            cp -fr src/tools/windows/recovery.zip src/tools/windows/zip
-            cp -fr src/tools/windows/splash.zip src/tools/windows/zip
-            cd src/tools/windows/zip
-            ./zip.exe -ur recovery.zip logo.bin
-            cd ../../../../
-            mv src/tools/windows/zip/recovery.zip output
-            rm -rf src/tools/windows/zip/logo.bin
-            mv output/modified.logo.bin src/tools/windows/zip/logo.bin
-            cd src/tools/windows/zip
-            ./zip.exe -ur splash.zip logo.bin
-            cd ../../../
-            mv src/tools/windows/zip/splash.zip output
-            sleep 1
-            echo  -e "${LG}All Done! its located in the output folder${NC}"
+            echo  -e "${RED}READ ABOVE MESSAGE SORRY...${NC}"
+            cd output
+            mkdir recovery
+            cd ../
+            cp -fr src/zip/META-INF output/recovery
+            cp -fr src/devices/OP2/logo.bin output/recovery/
+            cp -fr src/devices/OP2/updater-script output/recovery/META-INF/com/google/android/
+            cd output
+            mkdir splash
+            cd ../
+            cp -fr src/zip/META-INF output/splash
+            mv output/modified.logo.bin output/splash/logo.bin
+            cp -fr src/devices/OP2/updater-script output/splash/META-INF/com/google/android/
             ./inject
             break
             ;;
         "OnePlus 3/3t")
-            echo  -e "${RED}Packing flashable zips...${NC}"
-            cp -fr src/devices/OP3/logo.bin src/tools/windows/zip
-            cp -fr src/tools/zip.exe src/tools/windows/zip
-            cp -fr src/tools/windows/recovery.zip src/tools/windows/zip
-            cp -fr src/tools/windows/splash.zip src/tools/windows/zip
-            cd src/tools/windows/zip
-            ./zip.exe -ur recovery.zip logo.bin
-            cd ../../../../
-            mv src/tools/windows/zip/recovery.zip output
-            rm -rf src/tools/windows/zip/logo.bin
-            mv output/modified.logo.bin src/tools/windows/zip/logo.bin
-            cd src/tools/windows/zip
-            ./zip.exe -ur splash.zip logo.bin
-            cd ../../../
-            mv src/tools/windows/zip/splash.zip output
-            sleep 1
-            echo  -e "${LG}All Done! its located in the output folder${NC}"
+            echo  -e "${RED}READ ABOVE MESSAGE SORRY...${NC}"
+            cd output
+            mkdir recovery
+            cd ../
+            cp -fr src/zip/META-INF output/recovery
+            cp -fr src/devices/OP3/logo.bin output/recovery/
+            cp -fr src/devices/OP3/updater-script output/recovery/META-INF/com/google/android/
+            cd output
+            mkdir splash
+            cd ../
+            cp -fr src/zip/META-INF output/splash
+            mv output/modified.logo.bin output/splash/logo.bin
+            cp -fr src/devices/OP3/updater-script output/splash/META-INF/com/google/android/
             ./inject
             break
             ;;
         "OnePlus 5")
-            echo  -e "${RED}Packing flashable zips...${NC}"
-            cp -fr src/devices/OP5/logo.bin src/tools/windows/zip
-            cp -fr src/tools/zip.exe src/tools/windows/zip
-            cp -fr src/tools/windows/recovery.zip src/tools/windows/zip
-            cp -fr src/tools/windows/splash.zip src/tools/windows/zip
-            cd src/tools/windows/zip
-            ./zip.exe -ur recovery.zip logo.bin
-            cd ../../../../
-            mv src/tools/windows/zip/recovery.zip output
-            rm -rf src/tools/windows/zip/logo.bin
-            mv output/modified.logo.bin src/tools/windows/zip/logo.bin
-            cd src/tools/windows/zip
-            ./zip.exe -ur splash.zip logo.bin
-            cd ../../../
-            mv src/tools/windows/zip/splash.zip output
-            sleep 1
-            echo  -e "${LG}All Done! its located in the output folder${NC}"
+            echo  -e "${RED}READ ABOVE MESSAGE SORRY...${NC}"
+            cd output
+            mkdir recovery
+            cd ../
+            cp -fr src/zip/META-INF output/recovery
+            cp -fr src/devices/OP5/logo.bin output/recovery/
+            cp -fr src/devices/OP5/updater-script output/recovery/META-INF/com/google/android/
+            cd output
+            mkdir splash
+            cd ../
+            cp -fr src/zip/META-INF output/splash
+            mv output/modified.logo.bin output/splash/logo.bin
+            cp -fr src/devices/OP5/updater-script output/splash/META-INF/com/google/android/
             ./inject
             break
             ;;
