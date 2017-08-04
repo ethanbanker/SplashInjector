@@ -45,7 +45,7 @@ then
         "OnePlus X")
             echo  -e "${RED}Packing logo.bin...${NC}"
             cd output
-            echo -e "${LG}ERROR someone needs to send me this file${NC}"
+            ./injector -i logo.bin -j fhd_oppo fhd_at
             cd ../
             sleep 1
             echo  -e "${LG}All Done!${NC}"
@@ -106,7 +106,7 @@ do
         "OnePlus X")
             echo  -e "${RED}Packing logo.bin...${NC}"
             cd output
-            echo -e "${LG}ERROR someone needs to send me this file${NC}"
+            ./injector.exe -i logo.bin -j fhd_oppo fhd_at
             cd ../
             sleep 1
             echo  -e "${LG}All Done!${NC}"
