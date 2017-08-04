@@ -23,7 +23,7 @@ fi
 VERSION=v1.52
 
 clear
-echo -e " ${RED}SPLASH INJECTOR ${NC}"${LG}${VERSION}${NC}
+echo -e " ${RED}SPLASH INJECTOR ${NC}"
 echo -e " ${LG}BY ETHANBANKER2428 "
 echo -e " Credit to @makers_mark${NC} "
 echo -e " ${LB}Version:${NC}"${RED}${OS}${NC} ${LG}${VERSION}${NC}
