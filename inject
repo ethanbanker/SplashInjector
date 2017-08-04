@@ -72,9 +72,6 @@ then
             ./src/info/help
             break
             ;;
-        "Exit")
-            break
-            ;;
         "Update")
             cd ../
             rm -rf SplashInjector
@@ -83,6 +80,9 @@ then
             echo -e "${LG}your all up to date!${NC}
             ./inject
             break
+        "Exit")
+            break
+            ;;
         *) echo invalid option;;
         esac
     done
