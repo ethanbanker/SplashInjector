@@ -82,7 +82,7 @@ then
             rm -rf SplashInjector
             git clone https://github.com/ethanbanker2428/SplashInjector
             cd SplashInjector
-            echo -e "${LG}your all up to date!${NC}
+            echo -e "${LG}your all up to date!${NC}"
             ./inject
             break
             ;;
@@ -142,7 +142,7 @@ then
             rm -rf SplashInjector
             git clone git://github.com/ethanbanker2428/SplashInjector
             cd SplashInjector
-            echo -e "${LG}your all up to date!${NC}
+            echo -e "${LG}your all up to date!${NC}"
             ./inject
             break
             ;;
