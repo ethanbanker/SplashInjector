@@ -21,7 +21,7 @@ else
 fi
 
 clear
-echo  -e "${LG}NOW WELL PACK YOUR LOGO.BIN${NC}"
+echo  -e "${LG}NOW WE'LL PACK YOUR LOGO.BIN${NC}"
 sleep 1
 
 if [ ${OS} == LINUX ]
