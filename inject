@@ -33,7 +33,7 @@ sleep 1
 echo -e "                               "
 echo -e "${RED}I AM NOT RESPONSIBLE IN ANY WAY FOR ANYTHING YOU DO${NC}"
 echo -e "                               "
-echo -e "${RED}Use the help option to learn a little about each step${NC}"
+echo -e "${RED}Use the help option to learn a little bit more about each step${NC}"
 echo -e "                               "
 echo -e "${RED}IF YOUR USING WINBLOWS USE GIT BASH!!!!!!!!${NC}"
 
@@ -134,7 +134,7 @@ then
             ;;
         "Update")
         	clear
-        	echo -e "${RED}THIS WILL DELETE EVERYTHING SO ANYTHING U WANT TO SAVE REMOVE FROM THE SPLASHINJECTOR FOLDER${NC}"
+        	echo -e "${RED}THIS WILL DELETE EVERYTHING SO ANYTHING YOU WANT TO SAVE REMOVE FROM THE SPLASHINJECTOR FOLDER${NC}"
         	sleep 1
 			echo -e "${RED}Press any key to continue${NC}"
 			read -n 1 -s -r -p ""
