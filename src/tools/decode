@@ -46,7 +46,7 @@ then
             ./injector -i logo.bin -d
             cd ../
             sleep 1
-            echo -e "done! now your ready to edit then encode"
+            echo -e "done! now you're ready to edit. When you are done, you can encode"
             ./inject
             break
             ;;
@@ -64,7 +64,7 @@ then
             ./injector -i logo.bin -d
             cd ../
             sleep 1
-            echo -e "done! now your ready to edit then encode"
+            echo -e "done! now you're ready to edit. When you are done, you can encode"
             ./inject
             break
             ;;
@@ -83,7 +83,7 @@ then
             ./injector -i logo.bin -d
             cd ../
             sleep 1
-            echo -e "done! now your ready to edit then encode"
+            echo -e "done! now you're ready to edit. When you are done, you can encode"
             ./inject
             break
             ;;
@@ -102,7 +102,7 @@ then
             ./injector -i logo.bin -d
             cd ../
             sleep 1
-            echo -e "done! now your ready to edit then encode"
+            echo -e "done! now you're ready to edit. When you are done, you can encode"
             ./inject
             break
             ;;
@@ -121,7 +121,7 @@ then
             ./injector -i logo.bin -d
             cd ../
             sleep 1
-            echo -e "done! now your ready to edit then encode"
+            echo -e "done! now you're ready to edit. When you are done, you can encode"
             ./inject
             break
             ;;
@@ -150,7 +150,7 @@ then
             ./injector.exe -i logo.bin -d
             cd ../
             sleep 1
-            echo -e "done! now your ready to edit then encode"
+            echo -e "done! now you're ready to edit. When you are done, you can encode"
             ./inject
             break
             ;;
@@ -168,7 +168,7 @@ then
             ./injector.exe -i logo.bin -d
             cd ../
             sleep 1
-            echo -e "done! now your ready to edit then encode"
+            echo -e "done! now you're ready to edit. When you are done, you can encode"
             ./inject
             break
             ;;
@@ -186,7 +186,7 @@ then
             ./injector.exe -i logo.bin -d
             cd ../
             sleep 1
-            echo -e "done! now your ready to edit then encode"
+            echo -e "done! now you're ready to edit. When you are done, you can encode"
             ./inject
             break
             ;;
@@ -204,7 +204,7 @@ then
             ./injector.exe -i logo.bin -d
             cd ../
             sleep 1
-            echo -e "done! now your ready to edit then encode"
+            echo -e "done! now you're ready to edit. When you are done, you can encode"
             ./inject
             break
             ;;
@@ -222,7 +222,7 @@ then
             ./injector.exe -i logo.bin -d
             cd ../
             sleep 1
-            echo -e "done! now your ready to edit then encode"
+            echo -e "done! now you're ready to edit. When you are done, you can encode"
             ./inject
             break
             ;;
